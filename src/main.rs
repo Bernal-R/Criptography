@@ -11,10 +11,10 @@ struct Cipher {
 trait OTP {
     fn new(message: &'static str, key: &'static str, cyphertext: &'static str) -> Self;
 
-    // Instance method
     fn convert_binary(&self, string: &'static str) -> &[u8];
     fn xor(&self, encripted : bool) -> String;
-    fn save_cyphertext(&mut self, cyphertext:String);
+    fn save_cyphertext(&mut self, cyphertext: String);
+
 
     fn ecrypt(&self) -> String{
         return self.xor(true);
@@ -32,8 +32,9 @@ impl OTP for Cipher {
         Cipher { message: message, key: key, cyphertext: ""}
     }
 
-    fn save_cyphertext(&mut self, s: String) {
-        self.cyphertext = "test";
+    fn save_cyphertext(&mut self, cyphertext: String) {
+        let a = cyphertext.as_str();
+        self.cyphertext = "ded";
     }
 
     fn convert_binary(&self, string: &'static str) -> &[u8] {
@@ -43,7 +44,7 @@ impl OTP for Cipher {
 
     fn xor(&self, encripted : bool) -> String {
         let mut xor: Vec<u8> = Vec::new();
-        let mut text_bytes: &[u8];
+        let text_bytes: &[u8];
 
         if (encripted){
             text_bytes = self.convert_binary(self.message);
@@ -58,6 +59,7 @@ impl OTP for Cipher {
         }
 
         return  String::from_utf8(xor).unwrap();
+        //return  &str = str::from_utf8(xor).unwrap();
     }
 }
 
@@ -71,5 +73,5 @@ fn main() {
     println!("Encrypted Message: {:?}", cyphertext);
 
     let message_decrypted = opt_algorithm.decrypt(cyphertext);
-    //println!("Dencrypted Cyphertext: {:?}", cyphertext);
+    println!("Dencrypted Cyphertext: {:?}", message_decrypted);
 }
